@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rejoindre une coloc — Hellow</title>
+<meta name="description" content="Tu as été invité à rejoindre une colocation sur Hellow.">
+<meta property="og:title" content="Tu es invité sur Hellow !">
+<meta property="og:description" content="Rejoins ma colocation sur Hellow — tâches, finances et chat partagés.">
+<meta property="og:image" content="https://myhellow.app/og-image.png">
+<meta property="og:url" content="https://myhellow.app/join">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tu es invité sur Hellow !">
+<meta name="twitter:description" content="Rejoins ma colocation sur Hellow — tâches, finances et chat partagés.">
+<meta name="twitter:image" content="https://myhellow.app/og-image.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #F8FAFC; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: #fff; border-radius: 24px;
+    padding: 40px 32px; max-width: 400px; width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(30,27,75,0.1);
+    border: 1px solid #E2E8F0;
+  }
+  .logo {
+    width: 64px; height: 64px; background: #1E1B4B;
+    border-radius: 18px; margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-h { position: relative; width: 36px; height: 36px; }
+  .logo-h::before, .logo-h::after {
+    content: ''; position: absolute; top: 2px;
+    width: 7px; height: 32px; background: #fff; border-radius: 2px;
+  }
+  .logo-h::before { left: 2px; }
+  .logo-h::after { right: 2px; }
+  .logo-bar {
+    position: absolute; left: 2px; top: 11px;
+    width: 32px; height: 8px; background: #fff; border-radius: 2px;
+  }
+  h1 { font-size: 22px; font-weight: 800; color: #1E1B4B; margin-bottom: 8px; }
+  .subtitle { font-size: 14px; color: #64748B; margin-bottom: 24px; line-height: 1.5; }
+  .code-box {
+    background: #EEF2FF; border: 2px solid #C7D2FE;
+    border-radius: 14px; padding: 16px 24px;
+    margin-bottom: 28px;
+  }
+  .code-label { font-size: 11px; color: #6366F1; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .code { font-size: 32px; font-weight: 900; color: #6366F1; letter-spacing: 6px; }
+  .btn {
+    display: block; width: 100%;
+    background: #1E1B4B; color: #fff;
+    padding: 16px; border-radius: 14px;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; margin-bottom: 12px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,27,75,0.25); }
+  .btn-secondary {
+    display: block; width: 100%;
+    background: #F1F5F9; color: #1E293B;
+    padding: 16px; border-radius: 14px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: #E2E8F0; }
+  .note { font-size: 12px; color: #94A3B8; margin-top: 20px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-h"><div class="logo-bar"></div></div>
+  </div>
+  <h1>Tu es invité !</h1>
+  <p class="subtitle">Quelqu'un t'invite à rejoindre sa colocation sur Hellow.</p>
+
+  <div class="code-box" id="codeBox" style="display:none">
+    <div class="code-label">Code d'invitation</div>
+    <div class="code" id="codeDisplay"></div>
+  </div>
+
+  <a href="#" class="btn" id="openApp">Ouvrir dans Hellow</a>
+  <a href="https://myhellow.app" class="btn-secondary">Télécharger Hellow</a>
+
+  <p class="note">Si tu n'as pas encore Hellow, télécharge l'app gratuitement puis entre le code d'invitation.</p>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+
+  if (code) {
+    document.getElementById('codeBox').style.display = 'block';
+    document.getElementById('codeDisplay').textContent = code;
+    document.getElementById('openApp').href = 'hellow://join/' + code;
+  } else {
+    document.getElementById('openApp').href = 'hellow://';
+  }
+
+  // Tentative d'ouverture automatique de l'app
+  if (code) {
+    setTimeout(() => {
+      window.location.href = 'hellow://join/' + code;
+    }, 500);
+  }
+</script>
+</body>
+</html>
