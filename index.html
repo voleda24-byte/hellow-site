@@ -1,755 +1,108 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hellow — La coloc simplifiée</title>
-    <meta
-      name="description"
-      content="Tâches, finances, chat et planning — tout pour votre coloc au même endroit. Téléchargez Hellow gratuitement."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --navy: #1e1b4b;
-        --indigo: #6366f1;
-        --indigo-light: #a5b4fc;
-        --violet: #8b5cf6;
-        --bg: #f8fafc;
-        --white: #ffffff;
-        --text: #1e293b;
-        --muted: #64748b;
-        --border: #e2e8f0;
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rejoindre une coloc — Hellow</title>
+<meta name="description" content="Tu as été invité à rejoindre une colocation sur Hellow.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #F8FAFC; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: #fff; border-radius: 24px;
+    padding: 40px 32px; max-width: 400px; width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(30,27,75,0.1);
+    border: 1px solid #E2E8F0;
+  }
+  .logo {
+    width: 64px; height: 64px; background: #1E1B4B;
+    border-radius: 18px; margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-h { position: relative; width: 36px; height: 36px; }
+  .logo-h::before, .logo-h::after {
+    content: ''; position: absolute; top: 2px;
+    width: 7px; height: 32px; background: #fff; border-radius: 2px;
+  }
+  .logo-h::before { left: 2px; }
+  .logo-h::after { right: 2px; }
+  .logo-bar {
+    position: absolute; left: 2px; top: 11px;
+    width: 32px; height: 8px; background: #fff; border-radius: 2px;
+  }
+  h1 { font-size: 22px; font-weight: 800; color: #1E1B4B; margin-bottom: 8px; }
+  .subtitle { font-size: 14px; color: #64748B; margin-bottom: 24px; line-height: 1.5; }
+  .code-box {
+    background: #EEF2FF; border: 2px solid #C7D2FE;
+    border-radius: 14px; padding: 16px 24px;
+    margin-bottom: 28px;
+  }
+  .code-label { font-size: 11px; color: #6366F1; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .code { font-size: 32px; font-weight: 900; color: #6366F1; letter-spacing: 6px; }
+  .btn {
+    display: block; width: 100%;
+    background: #1E1B4B; color: #fff;
+    padding: 16px; border-radius: 14px;
+    font-size: 15px; font-weight: 700;
+    text-decoration: none; margin-bottom: 12px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,27,75,0.25); }
+  .btn-secondary {
+    display: block; width: 100%;
+    background: #F1F5F9; color: #1E293B;
+    padding: 16px; border-radius: 14px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: #E2E8F0; }
+  .note { font-size: 12px; color: #94A3B8; margin-top: 20px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-h"><div class="logo-bar"></div></div>
+  </div>
+  <h1>Tu es invité !</h1>
+  <p class="subtitle">Quelqu'un t'invite à rejoindre sa colocation sur Hellow.</p>
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+  <div class="code-box" id="codeBox" style="display:none">
+    <div class="code-label">Code d'invitation</div>
+    <div class="code" id="codeDisplay"></div>
+  </div>
 
-      html {
-        scroll-behavior: smooth;
-      }
+  <a href="#" class="btn" id="openApp">Ouvrir dans Hellow</a>
+  <a href="https://myhellow.app" class="btn-secondary">Télécharger Hellow</a>
 
-      body {
-        font-family: "DM Sans", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        overflow-x: hidden;
-      }
+  <p class="note">Si tu n'as pas encore Hellow, télécharge l'app gratuitement puis entre le code d'invitation.</p>
+</div>
 
-      /* ── NAV ── */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 18px 40px;
-        background: rgba(248, 250, 252, 0.85);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-      }
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
 
-      .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
-      .nav-logo-icon {
-        width: 36px;
-        height: 36px;
-        background: var(--navy);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      .logo-h {
-        position: relative;
-        width: 22px;
-        height: 22px;
-      }
-      .logo-h::before,
-      .logo-h::after {
-        content: "";
-        position: absolute;
-        top: 1px;
-        width: 5px;
-        height: 20px;
-        background: #fff;
-        border-radius: 2px;
-      }
-      .logo-h::before {
-        left: 1px;
-      }
-      .logo-h::after {
-        right: 1px;
-      }
-      .logo-bar {
-        position: absolute;
-        left: 1px;
-        top: 7px;
-        width: 20px;
-        height: 5px;
-        background: #fff;
-        border-radius: 2px;
-      }
-      .nav-name {
-        font-family: "Syne", sans-serif;
-        font-weight: 800;
-        font-size: 18px;
-        color: var(--navy);
-      }
-      .nav-cta {
-        background: var(--indigo);
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 14px;
-        text-decoration: none;
-        transition:
-          transform 0.15s,
-          box-shadow 0.15s;
-      }
-      .nav-cta:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
-      }
+  if (code) {
+    document.getElementById('codeBox').style.display = 'block';
+    document.getElementById('codeDisplay').textContent = code;
+    document.getElementById('openApp').href = 'hellow://join/' + code;
+  } else {
+    document.getElementById('openApp').href = 'hellow://';
+  }
 
-      /* ── HERO ── */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 120px 24px 80px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero-bg {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        background:
-          radial-gradient(
-            ellipse 80% 60% at 50% -10%,
-            rgba(99, 102, 241, 0.12) 0%,
-            transparent 70%
-          ),
-          radial-gradient(
-            ellipse 40% 40% at 85% 70%,
-            rgba(30, 27, 75, 0.07) 0%,
-            transparent 60%
-          );
-      }
-
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        border-radius: 999px;
-        padding: 6px 16px;
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--indigo);
-        margin-bottom: 28px;
-        position: relative;
-        z-index: 1;
-        animation: fadeUp 0.6s ease both;
-      }
-      .hero-badge-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--indigo);
-        animation: pulse 2s infinite;
-      }
-
-      .hero h1 {
-        font-family: "Syne", sans-serif;
-        font-size: clamp(42px, 7vw, 80px);
-        font-weight: 800;
-        line-height: 1.05;
-        color: var(--navy);
-        margin-bottom: 24px;
-        position: relative;
-        z-index: 1;
-        animation: fadeUp 0.6s 0.1s ease both;
-      }
-      .hero h1 em {
-        font-style: normal;
-        background: linear-gradient(135deg, var(--indigo), var(--violet));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .hero p {
-        font-size: clamp(16px, 2vw, 20px);
-        color: var(--muted);
-        line-height: 1.6;
-        max-width: 560px;
-        margin: 0 auto 40px;
-        position: relative;
-        z-index: 1;
-        animation: fadeUp 0.6s 0.2s ease both;
-      }
-
-      .hero-stores {
-        display: flex;
-        gap: 14px;
-        justify-content: center;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-        animation: fadeUp 0.6s 0.3s ease both;
-      }
-
-      .store-btn {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: var(--navy);
-        color: #fff;
-        padding: 14px 22px;
-        border-radius: 14px;
-        text-decoration: none;
-        transition:
-          transform 0.15s,
-          box-shadow 0.15s;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .store-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(30, 27, 75, 0.25);
-      }
-      .store-btn svg {
-        width: 24px;
-        height: 24px;
-        flex-shrink: 0;
-      }
-      .store-btn-text {
-        text-align: left;
-      }
-      .store-btn-text small {
-        display: block;
-        font-size: 11px;
-        opacity: 0.6;
-        font-weight: 400;
-      }
-      .store-btn-text strong {
-        display: block;
-        font-size: 16px;
-        font-weight: 700;
-      }
-
-      .hero-note {
-        margin-top: 20px;
-        font-size: 13px;
-        color: var(--muted);
-        position: relative;
-        z-index: 1;
-        animation: fadeUp 0.6s 0.4s ease both;
-      }
-
-      /* ── FEATURES ── */
-      .features {
-        padding: 100px 24px;
-        max-width: 1100px;
-        margin: 0 auto;
-      }
-
-      .section-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: var(--indigo);
-        margin-bottom: 14px;
-      }
-      .section-label::before {
-        content: "";
-        width: 24px;
-        height: 2px;
-        background: var(--indigo);
-        border-radius: 2px;
-      }
-
-      .features-titre {
-        font-family: "Syne", sans-serif;
-        font-size: clamp(28px, 4vw, 44px);
-        font-weight: 800;
-        color: var(--navy);
-        margin-bottom: 14px;
-        max-width: 600px;
-      }
-
-      .features-sous {
-        font-size: 17px;
-        color: var(--muted);
-        max-width: 520px;
-        margin-bottom: 64px;
-        line-height: 1.6;
-      }
-
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-      }
-
-      .feature-card {
-        background: var(--white);
-        border-radius: 20px;
-        padding: 28px;
-        border: 1px solid var(--border);
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s;
-      }
-      .feature-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(99, 102, 241, 0.1);
-      }
-
-      .feature-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-        margin-bottom: 18px;
-      }
-      .feature-icon ion-icon {
-        font-size: 24px;
-      }
-
-      .feature-card h3 {
-        font-family: "Syne", sans-serif;
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--navy);
-        margin-bottom: 8px;
-      }
-      .feature-card p {
-        font-size: 14px;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      /* ── CTA ── */
-      .cta-section {
-        margin: 0 24px 100px;
-        max-width: 1052px;
-        margin-left: auto;
-        margin-right: auto;
-        background: var(--navy);
-        border-radius: 28px;
-        padding: 64px 40px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .cta-section::before {
-        content: "";
-        position: absolute;
-        top: -60px;
-        right: -60px;
-        width: 300px;
-        height: 300px;
-        border-radius: 50%;
-        background: rgba(99, 102, 241, 0.2);
-      }
-      .cta-section::after {
-        content: "";
-        position: absolute;
-        bottom: -80px;
-        left: -40px;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background: rgba(139, 92, 246, 0.15);
-      }
-
-      .cta-section h2 {
-        font-family: "Syne", sans-serif;
-        font-size: clamp(24px, 4vw, 40px);
-        font-weight: 800;
-        color: #fff;
-        margin-bottom: 14px;
-        position: relative;
-        z-index: 1;
-      }
-      .cta-section p {
-        font-size: 16px;
-        color: rgba(255, 255, 255, 0.6);
-        margin-bottom: 36px;
-        position: relative;
-        z-index: 1;
-      }
-      .cta-stores {
-        display: flex;
-        gap: 14px;
-        justify-content: center;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-      }
-      .cta-stores .store-btn {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.2);
-      }
-      .cta-stores .store-btn:hover {
-        background: rgba(255, 255, 255, 0.18);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      }
-
-      /* ── FOOTER ── */
-      footer {
-        border-top: 1px solid var(--border);
-        padding: 32px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 16px;
-        max-width: 1100px;
-        margin: 0 auto;
-      }
-      .footer-logo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .footer-logo-icon {
-        width: 28px;
-        height: 28px;
-        background: var(--navy);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .footer-logo-h {
-        position: relative;
-        width: 17px;
-        height: 17px;
-      }
-      .footer-logo-h::before,
-      .footer-logo-h::after {
-        content: "";
-        position: absolute;
-        top: 1px;
-        width: 4px;
-        height: 15px;
-        background: #fff;
-        border-radius: 1.5px;
-      }
-      .footer-logo-h::before {
-        left: 1px;
-      }
-      .footer-logo-h::after {
-        right: 1px;
-      }
-      .footer-logo-bar {
-        position: absolute;
-        left: 1px;
-        top: 5px;
-        width: 15px;
-        height: 4px;
-        background: #fff;
-        border-radius: 1.5px;
-      }
-      .footer-name {
-        font-family: "Syne", sans-serif;
-        font-weight: 800;
-        font-size: 15px;
-        color: var(--navy);
-      }
-      .footer-links {
-        display: flex;
-        gap: 24px;
-        flex-wrap: wrap;
-      }
-      .footer-links a {
-        font-size: 13px;
-        color: var(--muted);
-        text-decoration: none;
-        transition: color 0.15s;
-      }
-      .footer-links a:hover {
-        color: var(--indigo);
-      }
-      .footer-copy {
-        font-size: 12px;
-        color: var(--muted);
-      }
-
-      /* ── ANIMATIONS ── */
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.4;
-        }
-      }
-
-      /* ── RESPONSIVE ── */
-      @media (max-width: 600px) {
-        nav {
-          padding: 14px 20px;
-        }
-        .hero {
-          padding: 100px 20px 60px;
-        }
-        .cta-section {
-          padding: 48px 24px;
-          margin: 0 16px 60px;
-        }
-        footer {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-      }
-    </style>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
-  </head>
-  <body>
-    <!-- NAV -->
-    <nav>
-      <a href="/" class="nav-logo">
-        <div class="nav-logo-icon">
-          <div class="logo-h"><div class="logo-bar"></div></div>
-        </div>
-        <span class="nav-name">Hellow</span>
-      </a>
-      <a href="#stores" class="nav-cta">Télécharger</a>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Disponible sur iOS & Android
-      </div>
-      <h1>La coloc,<br /><em>simplement.</em></h1>
-      <p>
-        Finis les tensions inutiles. Tâches, finances, chat et planning — tout
-        ce dont votre coloc a besoin, au même endroit.
-      </p>
-      <div class="hero-stores" id="stores">
-        <!-- App Store -->
-        <a href="#" class="store-btn">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
-            />
-          </svg>
-          <div class="store-btn-text">
-            <small>Télécharger sur l'</small>
-            <strong>App Store</strong>
-          </div>
-        </a>
-        <!-- Play Store -->
-        <a href="#" class="store-btn">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M3.18 23.76c.3.17.64.22.97.15l12.5-7.21-2.79-2.79-10.68 9.85zM.49 1.1C.18 1.42 0 1.9 0 2.53v18.94c0 .63.18 1.11.49 1.43l.08.07 10.61-10.61v-.25L.57 1.03l-.08.07zM20.29 10.34l-2.79-1.61-3.12 3.12 3.12 3.12 2.82-1.63c.8-.46.8-1.54-.03-2zM3.18.24L15.68 7.45l-2.79 2.79L2.21.39C2.53.32 2.88.07 3.18.24z"
-            />
-          </svg>
-          <div class="store-btn-text">
-            <small>Disponible sur</small>
-            <strong>Google Play</strong>
-          </div>
-        </a>
-      </div>
-      <p class="hero-note">Gratuit · Sans publicité · 4+ App Store</p>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="features">
-      <div class="section-label">Fonctionnalités</div>
-      <h2 class="features-titre">Tout ce dont votre coloc a besoin</h2>
-      <p class="features-sous">
-        Une seule app pour remplacer les tableurs, les groupes WhatsApp et les
-        post-its sur le frigo.
-      </p>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #eef2ff; color: #6366f1">
-            <ion-icon
-              name="checkmark-circle-outline"
-              style="font-size: 24px; color: #6366f1"
-            ></ion-icon>
-          </div>
-          <h3>Tâches partagées</h3>
-          <p>
-            Rotation automatique, suivi hebdomadaire. Chacun sait ce qu'il a à
-            faire, sans que personne ne soit l'organisateur.
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #fffbeb; color: #f59e0b">
-            <ion-icon
-              name="wallet-outline"
-              style="font-size: 24px; color: #f59e0b"
-            ></ion-icon>
-          </div>
-          <h3>Finances sans prise de tête</h3>
-          <p>
-            Ajoutez une dépense, Hellow calcule qui doit quoi à qui. Fini les
-            tableaux Excel et les conversations gênantes.
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #f5f3ff; color: #8b5cf6">
-            <ion-icon
-              name="chatbubbles-outline"
-              style="font-size: 24px; color: #8b5cf6"
-            ></ion-icon>
-          </div>
-          <h3>Chat intégré</h3>
-          <p>
-            Un chat de groupe pour toute la coloc et des messages privés entre
-            colocataires. Tout au même endroit.
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #eef2ff; color: #6366f1">
-            <ion-icon
-              name="calendar-outline"
-              style="font-size: 24px; color: #6366f1"
-            ></ion-icon>
-          </div>
-          <h3>Planning partagé</h3>
-          <p>
-            Événements, sorties, rendez-vous — un agenda commun pour ne jamais
-            avoir de surprise.
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #ecfdf5; color: #10b981">
-            <ion-icon
-              name="cart-outline"
-              style="font-size: 24px; color: #10b981"
-            ></ion-icon>
-          </div>
-          <h3>Courses et repas</h3>
-          <p>
-            Une liste de courses partagée et un planificateur de repas pour
-            organiser la semaine ensemble.
-          </p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon" style="background: #fef2f2; color: #ef4444">
-            <ion-icon
-              name="call-outline"
-              style="font-size: 24px; color: #ef4444"
-            ></ion-icon>
-          </div>
-          <h3>Contacts d'urgence</h3>
-          <p>
-            Propriétaire, plombier, médecin — tous les numéros utiles
-            accessibles en un tap.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-section">
-      <h2>Prêt à simplifier votre coloc ?</h2>
-      <p>Gratuit pour toujours. Hellow+ pour aller encore plus loin.</p>
-      <div class="cta-stores">
-        <a href="#" class="store-btn">
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            style="width: 24px; height: 24px"
-          >
-            <path
-              d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"
-            />
-          </svg>
-          <div class="store-btn-text">
-            <small>Télécharger sur l'</small>
-            <strong>App Store</strong>
-          </div>
-        </a>
-        <a href="#" class="store-btn">
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            style="width: 24px; height: 24px"
-          >
-            <path
-              d="M3.18 23.76c.3.17.64.22.97.15l12.5-7.21-2.79-2.79-10.68 9.85zM.49 1.1C.18 1.42 0 1.9 0 2.53v18.94c0 .63.18 1.11.49 1.43l.08.07 10.61-10.61v-.25L.57 1.03l-.08.07zM20.29 10.34l-2.79-1.61-3.12 3.12 3.12 3.12 2.82-1.63c.8-.46.8-1.54-.03-2zM3.18.24L15.68 7.45l-2.79 2.79L2.21.39C2.53.32 2.88.07 3.18.24z"
-            />
-          </svg>
-          <div class="store-btn-text">
-            <small>Disponible sur</small>
-            <strong>Google Play</strong>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-logo">
-        <div class="footer-logo-icon">
-          <div class="footer-logo-h"><div class="footer-logo-bar"></div></div>
-        </div>
-        <span class="footer-name">Hellow</span>
-      </div>
-      <div class="footer-links">
-        <a href="/politique-confidentialite">Politique de confidentialité</a>
-        <a href="mailto:support@myhellow.app">Contact</a>
-      </div>
-      <span class="footer-copy">© 2026 Lypto</span>
-    </footer>
-  </body>
+  // Tentative d'ouverture automatique de l'app
+  if (code) {
+    setTimeout(() => {
+      window.location.href = 'hellow://join/' + code;
+    }, 500);
+  }
+</script>
+</body>
 </html>
